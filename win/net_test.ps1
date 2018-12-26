@@ -1,8 +1,11 @@
+Add-Type -AssemblyName System.Net.Http
+
 $result_filedir = "~/Desktop"
 $result_filename = "AkerunRemote接続要件確認結果.log"
 
 function write_log( $str ){
-    Write-Output "$str" | Add-Content $result_filedir/$result_filename -Encoding UTF8
+#    Write-Output "$str" | Add-Content $result_filedir/$result_filename -Encoding UTF8
+    $str >> $result_filedir/$result_filename
 }
 
 function write_text( $str ){
@@ -16,7 +19,7 @@ if( Test-Path $result_filedir/$result_filename ){
 
 write_text "*********************************************"
 write_text "    Akerun Remote通信確認結果"
-write_text "                              software v0.2"
+write_text "                              software v0.5"
 write_text "*********************************************"
 
 Write-Host "`r`n"
@@ -62,6 +65,7 @@ for( $i=0; $i -lt $hostary.length; $i++ ){
 
     $tcp = New-Object System.Net.Sockets.tcpClient
     $tcp.connect( $hostary[$i], $portary[$i] )
+    sleep 2
     if( $tcp.connected ){
         write_text "接続可能"
     }else{
@@ -82,6 +86,7 @@ for( $i=0; $i -lt $udphostary.length; $i++ ){
 
     $udp = New-Object System.Net.Sockets.udpClient
     $udp.connect( $udphostary[$i], "123" )
+    sleep 2
     if( $udp.client.connected ){
         write_text "接続可能"
     }else{
@@ -108,10 +113,25 @@ if( $pinglost.length -eq 1 ){
     write_text "ping有効"
 }
 
+#Check Rest API communication
 write_text "`r`n"
-write_text "通信テスト完了。"
-write_text "`r`n"
+write_text "APIサーバーとの通信テスト中..."
+$hc = New-Object System.Net.Http.HttpClient
+$stream = $hc.GetAsync(“https://api.akerun.com/v2/app_version”)
+sleep 5
+if( $stream.Result.StatusCode -eq "OK" ){
+    write_text "正常に完了しました"
+}else{
+    write_text "通信に失敗しました"
+    write_log $stream
+}
 
+
+write_text "`r`n"
+write_text "通信テスト完了しました。"
+
+
+write_log "`r`n"
 write_log "********************************************************************"
 write_log "   本ファイルを、弊社からの要請に応じて通信確認結果の証憑として"
 write_log "   お送り頂く場合がございます。"
@@ -119,4 +139,4 @@ write_log "********************************************************************"
 
 Invoke-Item $result_filedir/$result_filename
 
-Read-Host "完了するにはENTERキーを押して下さい。"
+#Read-Host "完了するにはENTERキーを押して下さい。"
