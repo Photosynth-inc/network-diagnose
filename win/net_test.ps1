@@ -2,7 +2,7 @@ $result_filedir = "~/Desktop"
 $result_filename = "AkerunRemote接続要件確認結果.log"
 
 function write_log( $str ){
-    Write-Output "$str" | Add-Content $result_filedir/$result_filename -Encoding Default
+    Write-Output "$str" | Add-Content $result_filedir/$result_filename -Encoding UTF8
 }
 
 function write_text( $str ){
@@ -16,7 +16,7 @@ if( Test-Path $result_filedir/$result_filename ){
 
 write_text "*********************************************"
 write_text "    Akerun Remote通信確認結果"
-write_text "                              software v0.1"
+write_text "                              software v0.2"
 write_text "*********************************************"
 
 Write-Host "`r`n"
