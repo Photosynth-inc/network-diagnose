@@ -19,7 +19,7 @@ if( Test-Path $result_filedir/$result_filename ){
 
 write_text "*********************************************"
 write_text "    Akerun Remoteí êMämîFåãâ "
-write_text "                              software v0.5"
+write_text "                              software v0.6"
 write_text "*********************************************"
 
 Write-Host "`r`n"
