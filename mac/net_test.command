@@ -99,7 +99,10 @@ if [ ${NET_TYPE} = "2" ]; then
   writetext "入力SSID名 : ${SSID}"
   writetext "SSID名    MACアドレス   電波強度   チャンネル    認証方式(暗号化方式)"
   $WIFI_SCAN_COMMAND | grep $SSID | sed 's/^ *//g' | tee -a ${RESULT_LOG_FPATH}
+else
+  writetext "LANケーブルを利用のため　確認必要なし"
 fi
+
 writelog ''
 writelog ''
 
@@ -169,8 +172,11 @@ writelog "   本ファイルを、弊社からの要請に応じて通信確認�
 writelog "   お送り頂く場合がございます。"
 writelog "########################################################"
 
-writetext ''
-writetext '通信テスト完了しました。'
-writetext '何かキーを押すと終了します。'
+echo ''
+echo '通信テスト完了しました。'
+echo '何かキーを押すと終了します。'
 read WAIT_ANYKEY
+
+open -a TextEdit $RESULT_LOG_FPATH
+
 exit 0;
