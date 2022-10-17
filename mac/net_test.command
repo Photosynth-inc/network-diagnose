@@ -4,6 +4,7 @@ WIFI_SCAN_COMMAND="/System/Library/PrivateFrameworks/Apple80211.framework/Versio
 RESULT_LOG_FPATH=/Users/`whoami`/Desktop/akerun_net_check.log
 TMP_LOG=/tmp/net_test.log
 PING_TARGET=8.8.8.8
+PING_TARGET_2=8.8.4.4
 
 
 declare -a TCP_SERVER=( \
@@ -12,11 +13,13 @@ declare -a TCP_SERVER=( \
   "cdn.debian.or.jp" \
   "tg2repo.akerun.com" \
   "tg3repo.akerun.com" \
+  "tg4repo.akerun.com" \
 )
-  
+
 declare -a TCP_SERVER_PORT=( \
   "443" \
   "8883" \
+  "80" \
   "80" \
   "80" \
   "80" \
@@ -44,7 +47,7 @@ function resultConnectionTest () {
   PORT=$2
   IS_CONNECTED=""
   RETRY_COUNT=0
-  
+
   while true
   do
     sleep 1
@@ -81,12 +84,12 @@ do
   echo -n "> "
   read NET_TYPE
   [ "${NET_TYPE}" = "1" -o "${NET_TYPE}" = "2" ] && break;
-done 
+done
 
 if [ ${NET_TYPE} = "2" ]; then
   echo "Wi-Fiの 暗号化方式/認証方式 を確認します。"
   echo "設定されるWi-FiのSSIDを入力してください。"
-  
+
   while :
   do
     echo -n "> "
@@ -108,7 +111,7 @@ writelog ''
 
 writetext "##############################################"
 writetext "# TCP 接続確認"
-for i in ${!TCP_SERVER[@]}; do 
+for i in ${!TCP_SERVER[@]}; do
   server=${TCP_SERVER[$i]}
   port=${TCP_SERVER_PORT[$i]}
 
@@ -127,7 +130,7 @@ writelog ''
 
 writetext "###############################################"
 writetext "# UDP 接続確認"
-for i in ${!UDP_SERVER[@]}; do 
+for i in ${!UDP_SERVER[@]}; do
   server=${UDP_SERVER[$i]}
   port="123"
 
@@ -138,7 +141,7 @@ for i in ${!UDP_SERVER[@]}; do
   if [ -n "${RESULT}" ]; then writetext "接続成功!"
   else                      writetext "接続失敗..."
   fi
-  
+
   pkill -f "nc -uv" && pkill -f "tee"
 done
 writelog ''
@@ -150,6 +153,8 @@ writetext "# ping 確認"
 writetext "${PING_TARGET}への ping 確認中..."
 ping -c 20 ${PING_TARGET} | tee -a $RESULT_LOG_FPATH
 writelog ''
+writetext "${PING_TARGET_2}への ping 確認中..."
+ping -c 20 ${PING_TARGET_2} | tee -a $RESULT_LOG_FPATH
 writelog ''
 
 
