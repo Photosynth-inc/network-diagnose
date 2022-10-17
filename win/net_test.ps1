@@ -52,8 +52,9 @@ $hostary = @(
     "api.akerun.com",
     "cdn.debian.or.jp",
     "tg2repo.akerun.com",
-    "tg3repo.akerun.com")
-$portary = @("8883","443","80","80","80")
+    "tg3repo.akerun.com",
+    "tg4repo.akerun.com")
+$portary = @("8883","443","80","80","80","80")
 
 # Check TCP connection
 #Write-Host "`r`n"
@@ -99,7 +100,7 @@ for( $i=0; $i -lt $udphostary.length; $i++ ){
 
 #Check ping
 write_text "`r`n"
-write_text "ping 20回　確認中...."
+write_text "ping 8.8.8.8 20回　確認中...."
 $pingresult = ping -n 20 8.8.8.8
 $pingstr1 = $pingresult -match "損失"
 write_text $pingstr1
@@ -110,7 +111,23 @@ $pinglost = $pingresult -match "100% の損失"
 if( $pinglost.length -eq 1 ){
     write_text "pingが許可されているかご確認ください。"
 }else{
-    write_text "ping有効"
+    write_text "ping 8.8.8.8 有効"
+}
+
+#Check ping 2
+write_text "`r`n"
+write_text "ping 8.8.4.4 20回　確認中...."
+$pingresult2 = ping -n 20 8.8.4.4
+$pingstr3 = $pingresult2 -match "損失"
+write_text $pingstr3
+$pingstr4 = $pingresult2 -match "最小"
+write_text $pingstr4
+
+$pinglost2 = $pingresult2 -match "100% の損失"
+if( $pinglost2.length -eq 1 ){
+    write_text "pingが許可されているかご確認ください。"
+}else{
+    write_text "ping 8.8.4.4 有効"
 }
 
 #Check Rest API communication
@@ -122,8 +139,10 @@ sleep 5
 if( $stream.Result.StatusCode -eq "OK" ){
     write_text "正常に完了しました"
 }else{
-    write_text "通信に失敗しました"
-    write_log $stream
+    write_text "通信に失敗した可能性があるので、確認が必要となります。"
+    $status_code = "StatusCode:" + $stream.Result.StatusCode
+    write_text $status_code
+　　write_log $stream
 }
 
 
@@ -137,6 +156,8 @@ write_log "   本ファイルを、弊社からの要請に応じて通信確認結果の証憑として"
 write_log "   お送り頂く場合がございます。"
 write_log "********************************************************************"
 
-Invoke-Item $result_filedir/$result_filename
+#Open result log with notepad
+$path = Resolve-Path -Path $result_filedir/$result_filename
+notepad.exe $path.Path
 
 #Read-Host "完了するにはENTERキーを押して下さい。"
