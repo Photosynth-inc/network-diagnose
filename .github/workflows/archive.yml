@@ -1,10 +1,9 @@
 name: Generate archives
 
 on:
-  pull_request:
   push:
-    branches:
     tags:
+      - "*.*"
 
 jobs:
   archive:
@@ -14,8 +13,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Tar files
         run: tar -cvf network-diagnose.tar mac win
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: network-diagnose.tar
-          path: network-diagnose.tar
+          files: network-diagnose.tar
