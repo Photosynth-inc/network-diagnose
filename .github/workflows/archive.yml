@@ -1,0 +1,19 @@
+name: Generate archives
+
+on:
+  pull_request:
+  tags:
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Tar files
+        run: tar -cvf network-diagnose.tar mac win
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: network-diagnose.tar
+          path: network-diagnose.tar
