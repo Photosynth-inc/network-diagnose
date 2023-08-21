@@ -2,7 +2,9 @@ name: Generate archives
 
 on:
   pull_request:
-  tags:
+  push:
+    branches:
+    tags:
 
 jobs:
   archive:
