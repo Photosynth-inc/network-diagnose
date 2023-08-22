@@ -50,11 +50,10 @@ if( $ssid.length -gt 0 )
 $hostary = @(
     "broker.akerun.com",
     "api.akerun.com",
-    "cdn.debian.or.jp",
     "tg2repo.akerun.com",
     "tg3repo.akerun.com",
     "tg4repo.akerun.com")
-$portary = @("8883","443","80","80","80","80")
+$portary = @("8883","443","80","80","80")
 
 # Check TCP connection
 #Write-Host "`r`n"

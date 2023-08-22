@@ -10,7 +10,6 @@ PING_TARGET_2=8.8.4.4
 declare -a TCP_SERVER=( \
   "api.akerun.com" \
   "broker.akerun.com" \
-  "cdn.debian.or.jp" \
   "tg2repo.akerun.com" \
   "tg3repo.akerun.com" \
   "tg4repo.akerun.com" \
@@ -19,7 +18,6 @@ declare -a TCP_SERVER=( \
 declare -a TCP_SERVER_PORT=( \
   "443" \
   "8883" \
-  "80" \
   "80" \
   "80" \
   "80" \
