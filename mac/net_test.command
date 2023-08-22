@@ -21,7 +21,6 @@ declare -a TCP_SERVER_PORT=( \
   "80" \
   "80" \
   "80" \
-  "80" \
 )
 
 declare -a UDP_SERVER=( \
