@@ -19,7 +19,7 @@ if( Test-Path $result_filedir/$result_filename ){
 
 write_text "*********************************************"
 write_text "    Akerun Remoteí êMämîFåãâ "
-write_text "                              software v0.6"
+write_text "                              software v0.7"
 write_text "*********************************************"
 
 Write-Host "`r`n"
@@ -48,12 +48,16 @@ if( $ssid.length -gt 0 )
 }
 
 $hostary = @(
-    "broker.akerun.com",
     "api.akerun.com",
+    "s3.ap-northeast-1.amazonaws.com",
+    "tg2repo.akerun.com",
     "tg2repo.akerun.com",
     "tg3repo.akerun.com",
-    "tg4repo.akerun.com")
-$portary = @("8883","443","80","80","80")
+    "tg3repo.akerun.com",
+    "tg4repo.akerun.com",
+    "tg4repo.akerun.com",
+    "broker.akerun.com")
+$portary = @("443","443","80","443","80","443","80","443","8883")
 
 # Check TCP connection
 #Write-Host "`r`n"

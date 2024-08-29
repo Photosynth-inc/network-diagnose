@@ -9,18 +9,26 @@ PING_TARGET_2=8.8.4.4
 
 declare -a TCP_SERVER=( \
   "api.akerun.com" \
-  "broker.akerun.com" \
+  "s3.ap-northeast-1.amazonaws.com" \
+  "tg2repo.akerun.com" \
   "tg2repo.akerun.com" \
   "tg3repo.akerun.com" \
+  "tg3repo.akerun.com" \
   "tg4repo.akerun.com" \
+  "tg4repo.akerun.com" \
+  "broker.akerun.com" \
 )
 
 declare -a TCP_SERVER_PORT=( \
   "443" \
+  "443" \
+  "80" \
+  "443" \
+  "80" \
+  "443" \
+  "80" \
+  "443" \
   "8883" \
-  "80" \
-  "80" \
-  "80" \
 )
 
 declare -a UDP_SERVER=( \
@@ -64,7 +72,7 @@ rm ${RESULT_LOG_FPATH}
 
 writelog "##############################################"
 writelog "         Akerun Remote通信確認結果"
-writelog "                              software v0.1"
+writelog "                              software v0.7"
 writelog "##############################################"
 writelog ''
 writelog ''
